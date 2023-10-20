@@ -3,13 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements Serializable {
-    private int ID;
+    private int studentID;
     private String name;
     private String email;
     private String password;
-    private List<Subject> enrolledSubjects;
+    private List<Subject> subjects;
 
-    public Student(int ID, String name, String email, String password) {
+    public Student(int studentID, String name, String email, String password) {
         // Initialize fields
     }
 
