@@ -10,8 +10,32 @@ public class Student implements Serializable {
     private List<Subject> subjects;
 
     public Student(int studentID, String name, String email, String password) {
-        // Initialize fields
+        this.studentID = studentID;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.subjects = new ArrayList<>();
     }
 
-    // Constructors, getters, setters, and methods for user stories 101, 201, 202, 203, 301, 601, 602, and 603
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    // Implement additional methods as needed for student behaviors
 }
