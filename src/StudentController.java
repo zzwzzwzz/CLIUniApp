@@ -1,12 +1,9 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class StudentController {
     private Database database;
     private List<Student> students;
-    private String name;
 
     // Text color
     public static final String RESET = "\033[0m";      // RESET
@@ -61,6 +58,14 @@ public class StudentController {
         System.out.printf("%-8sPassword: ","");
         String password = scanner.nextLine();
     
+        if (isValidEmail(email) && isValidPassword(password)) {
+            System.out.printf(YELLOW + "%-8semail and password formats acceptable" + RESET,"").println();
+        
+        
+        } else {
+            System.out.printf(RED + "%-8sIncorrect email or password format" + RESET,"").println();
+        }
+
         List<Student> students = database.readStudents();
         boolean loggedIn = false;
     
@@ -68,15 +73,15 @@ public class StudentController {
             if (student.getEmail().equals(email) && student.getPassword().equals(password)) {
                 // Student is found and the provided email and password match
                 loggedIn = true;
-                System.out.printf(YELLOW + "%-8sWelcome, %s!" + RESET, student.getName()).println();
+                System.out.printf(CYAN + "%-16sStudent Course Menu (c/e/r/s/x): " + RESET,"");
+                new SubjectController().menu();
                 break; // Successful login, exit the loop
             }
         }
     
         if (!loggedIn) {
-            System.out.printf(RED + "%-8sIncorrect email or password." + RESET,"").println();
+            System.out.printf(RED + "%-8sStudent does not exist" + RESET,"").println();
         }
-        
         return loggedIn;
     }
 
