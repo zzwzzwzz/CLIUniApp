@@ -24,11 +24,10 @@ public class University {
                     admin.adminMenu();
                     break;
                 case 'S':
-                    studentController.run();
+                    studentController.menu();
                     break;
                 case 'X':
-                    System.out.println(YELLOW + "Thank You");
-                    System.out.print(RESET); // Reset text color to default
+                    System.out.println(YELLOW + "Thank You" + RESET);
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

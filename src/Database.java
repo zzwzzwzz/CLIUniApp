@@ -6,10 +6,15 @@ import java.util.logging.Logger;
 public class Database {
     private static final String filename = "students.data";
 
-    public void initialize() {
+    public static boolean fileExists() {
         File file = new File(filename);
-        if (!file.exists()) {
+        return file.exists();
+    }
+
+    public void initialize() {
+        if (!fileExists()) {
             try {
+                File file = new File(filename);
                 file.createNewFile();
                 List<Student> students = new ArrayList<>();
                 writeStudents(students);
@@ -42,31 +47,12 @@ public class Database {
     public boolean removeStudent(int studentID) {
         return false;
     }
+
+    public static void clearAll() {
+        try (PrintWriter writer = new PrintWriter(filename)) {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
-
-// import java.io.*;
-// import java.util.List;
-
-// public class Database {
-//     private static String filename = "students.data";
-
-//     public static boolean fileExists() {
-//         // Check if the file "students.data" exists
-//     }
-
-//     public static void createFile() {
-//         // Create the file "students.data" if it doesn't exist
-//     }
-
-//     public static List<Student> readStudents() {
-//         // Read objects (students) from the file "students.data"
-//     }
-
-//     public static void writeStudents(List<Student> students) {
-//         // Write objects (students) to the file "students.data"
-//     }
-
-//     public static void clearData() {
-//         // Clear the objects from the file "students.data"
-//     }
-// }

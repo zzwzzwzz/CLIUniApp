@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class StudentController {
@@ -15,17 +16,16 @@ public class StudentController {
 
     public static void main(String[] args) {
         StudentController controller = new StudentController(null);
-        controller.run();
+        controller.menu();
     }
 
     public StudentController(Scanner scanner) {
         database = new Database();
         database.initialize();
-        students = database.readStudents();
-        this.students = new ArrayList<>();
+        students = new ArrayList<>();
     }
 
-    public void run() {
+    public void menu() {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
 
@@ -33,9 +33,10 @@ public class StudentController {
             System.out.printf(CYAN + "%-8sStudent System (l/r/x): " + RESET,"");
             String choice = scanner.nextLine().trim();
 
+            // choice.toLowerCase() make sure the input choice is valid lowercase
             switch (choice.toLowerCase()) {
                 case "l":
-                    login();
+                    login(scanner);
                     break;
                 case "r":
                     register(scanner);
@@ -49,43 +50,76 @@ public class StudentController {
         }
     }
 
-    public boolean login() {
-        System.out.printf("%-8sLogin Function","").println();
-        return false;
+    public boolean login(Scanner scanner) {
+        System.out.printf(GREEN + "%-8sStudent Sign In" + RESET,"").println();
+
+        // Input email and password for login
+        System.out.printf("%-8sEmail: ","");
+        String email = scanner.nextLine();
+    
+        System.out.printf("%-8sPassword: ","");
+        String password = scanner.nextLine();
+    
+        List<Student> students = database.readStudents();
+        boolean loggedIn = false;
+    
+        for (Student student : students) {
+            if (student.getEmail().equals(email) && student.getPassword().equals(password)) {
+                // Student is found and the provided email and password match
+                loggedIn = true;
+                System.out.printf(YELLOW + "%-8sWelcome, %s!" + RESET, student.getName()).println();
+                break; // Successful login, exit the loop
+            }
+        }
+    
+        if (!loggedIn) {
+            System.out.printf(RED + "%-8sIncorrect email or password." + RESET,"").println();
+        }
+        
+        return loggedIn;
     }
 
     public void register(Scanner scanner) {
         System.out.printf(GREEN + "%-8sStudent Sign Up" + RESET,"").println();
 
         while (true) {
-            // Input from the registering student
+            // Email and password input from the registering student
             System.out.printf("%-8sEmail: ","");
             String email = scanner.nextLine();
     
             System.out.printf("%-8sPassword: ","");
             String password = scanner.nextLine();
     
-            // To check if both email and password are in the right format
+            // To check if both email and password are the right format
             if (isValidEmail(email) && isValidPassword(password)) {
-                boolean exists = false;
 
                 // To check if the student with the email already exists
-                List<Student> students = database.readStudents();
+                boolean exists = false;
                 for (Student student : students) {
                     if (student.getEmail().equals(email)) {
                         exists = true;
-                        System.out.printf(RED + "Student" + student.getName() + " already exists." + RESET,"").println();;
+                        System.out.printf(RED + "Student" + ((Student) students).getName() + "already exists" + RESET, "").println();
                         break;
                     }
                 }
 
                 // If the students doesn't exist, create a new student to the database
                 if (!exists) {
-////TO DO
-                    //Write the updated list back to the database file
-                    database.writeStudents(students);
+                    // Print a successfully registered message
                     System.out.printf(YELLOW + "%-8semail and password formats acceptable" + RESET,"").println();
-                    break; // Registration successful, exit the loop
+
+                    // Input name from the registering students
+                    System.out.printf("%-8sName: ", "");
+                    String name = scanner.nextLine();
+                    System.out.printf(YELLOW + "%-8sEnrolling student %s" + RESET, "", name).println();
+
+                    // Generate a unique student ID
+                    int studentID = generateStudentID(students);
+
+                    // Create the new student and add them to the database
+                    Student newStudent = new Student(studentID, name, email, password, students);
+                    students.add(newStudent);
+                    database.writeStudents(students);
                 }
             } else {
                 System.out.printf(RED + "%-8sIncorrect email or password format" + RESET,"").println();
@@ -93,9 +127,30 @@ public class StudentController {
         }
     }
 
+    // Generate random studentID, 1 <= studentID <= 999999, unique and formatted as 6-digits width.
+    // IDs less than 6-digits width should be completed with zeroes from the left.
+
+    private int generateStudentID(List<Student> students) {
+        Random r = new Random();
+        int studentID = r.nextInt(999999)+1;
+
+        while (match(studentID))
+            studentID = r.nextInt(999999)+1;
+        return studentID;
+    }
+
+    public boolean match(int studentID) {
+        for (Student student : students) {
+            if (student.match(studentID))
+                return true;
+        }
+        return false;
+    }
+
+    
     // Define email verification method
     // Email must have . before @ and must end with university.com
-    public static final String EMAIL_REGEX = ".*\\..*@.*university\\.com"; 
+    public static final String EMAIL_REGEX = "^[A-Za-z]+\\.[A-Za-z]+@university\\.com$"; 
     public static boolean isValidEmail(String email) {
         return email.matches(EMAIL_REGEX);
     }

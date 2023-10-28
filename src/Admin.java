@@ -14,6 +14,12 @@ public class Admin implements Serializable {
     public static final String YELLOW = "\033[0;33m";  // YELLOW
     public static final String CYAN = "\033[0;96m";    // CYAN
 
+    public static void main(String[] args) {
+        Database database = new Database(); // Create a Database instance
+        Scanner scanner = new Scanner(System.in); // Create a Scanner for user input
+        // Create an Admin instance with the Database and Scanner
+        new Admin(database, scanner).adminMenu();
+    }
 
     public Admin(Database database, Scanner scanner) {
         this.database = database;
@@ -23,7 +29,15 @@ public class Admin implements Serializable {
     // Clear all the students from database
     private void clearAll() {
         System.out.printf(YELLOW + "%-8sClearing students database" + RESET,"").println();
-        students.clear();
+        System.out.printf(RED + "%-8sAre you sure you want to clear the database (Y)ES/(N)O: " + RESET,"");
+        
+        String clearStudent = scanner.next().toUpperCase(); // Make sure the input is uppercase letter
+        // Clear all data if the input is Y
+        if (clearStudent.equals("Y")){
+            Database.clearAll();
+            students.clear(); 
+            System.out.printf(YELLOW + "%-8sStudents data cleared" + RESET,"").println();
+        }
     }
 
     private void groupbyGrade() {
@@ -51,9 +65,12 @@ public class Admin implements Serializable {
         List<Student> students = database.readStudents();
         System.out.printf(YELLOW + "%-8sStudent List" + RESET,"").println();
         if (students.isEmpty()) {
-            System.out.printf("%-8s< Nothing to Display >","").println();
+            System.out.printf("%-16s< Nothing to Display >","").println();
         } else {
             students.forEach(student -> System.out.println(student.toString()));
+            // for (int i = 0; i < students.size(); i++) {//遍历students数组,size()方法返回students数组的长度,i++每次循环加1
+            //     System.out.println(students.get(i).getName()+" :: "+students.get(i).getStudentID()+" --> Email: "+students.get(i).getEmail());
+            // }//打印出学生的名字/ID/email 通过get（）方法获取students数组里的元素
         }
     }
 
@@ -80,6 +97,8 @@ public class Admin implements Serializable {
                     break;
                 case 'x':
                     break;
+                default:
+                    System.out.printf(RED + "%-8sInvalid choice. Please try again." + RESET,"").println();
             }
         } while (choice != 'x');
     }
