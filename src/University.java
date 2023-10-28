@@ -12,7 +12,8 @@ public class University {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StudentController studentController = new StudentController(scanner);
-        Admin admin = new Admin(null, scanner);
+        Database database = new Database(); // Order matters, create a Database instance
+        Admin admin = new Admin(database, scanner);
 
         char choice;
         do {

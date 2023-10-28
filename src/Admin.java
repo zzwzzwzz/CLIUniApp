@@ -17,13 +17,6 @@ public class Admin implements Serializable {
     public static final String YELLOW = "\033[0;33m";  // YELLOW
     public static final String CYAN = "\033[0;96m";    // CYAN
 
-    public static void main(String[] args) {
-        Database database = new Database(); // Create a Database instance
-        Scanner scanner = new Scanner(System.in); // Create a Scanner for user input
-        // Create an Admin instance with the Database and Scanner
-        new Admin(database, scanner).adminMenu();
-    }
-
     public Admin(Database database, Scanner scanner) {
         this.database = database;
         this.scanner = scanner;
