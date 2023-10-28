@@ -27,7 +27,10 @@ public class Admin implements Serializable {
         System.out.printf(YELLOW + "%-8sClearing students database" + RESET,"").println();
         System.out.printf(RED + "%-8sAre you sure you want to clear the database (Y)ES/(N)O: " + RESET,"");
         
-        String clearStudent = scanner.hasNext() ? scanner.next().toUpperCase() : "N"; // Make sure the input is uppercase letter
+        // Make sure the input is uppercase letter
+        String clearStudent = scanner.hasNext() ? 
+            scanner.nextLine().substring(0,1).toUpperCase() : 
+            "N"; 
         // Clear all data if the input is Y
         if (clearStudent.equals("Y")){
             // Only clear the list if it's not null
@@ -55,6 +58,7 @@ public class Admin implements Serializable {
 
     private void removeStudent() {
         System.out.printf("%-8sRemove by ID: ","");
+
         int studentID = Integer.parseInt(scanner.nextLine());
         boolean removed = database.removeStudent(studentID);
         if (removed) {

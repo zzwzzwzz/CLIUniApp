@@ -35,7 +35,7 @@ public class Student implements Serializable {
 
         while (alreadyExists(studentID))
             studentID = r.nextInt(999999)+1;
-            return String.format("%06d", studentID);
+        return String.format("%06d", studentID);
     }
 
     public boolean alreadyExists(int studentID) {

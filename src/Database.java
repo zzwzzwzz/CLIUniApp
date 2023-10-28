@@ -63,14 +63,26 @@ public class Database {
         }
     }
 
+    // Return true if a student was removed
     public boolean removeStudent(int studentID) {
-        return false;
+        List<Student> students = readStudents();
+        boolean removed = students.removeIf(student -> student.getStudentID() == studentID);
+        writeStudents(students);
+        return removed;
     }
-    public Student[] readObjects() {
+
+    // Unfinished
+    public Student[] readSubjects() {
         return null;
     }
 
-    public void writeObject(Student student) {
+    // Unifinished
+    public void writeSubjects(Subject subject) {
+
+    }
+
+    public boolean removeSubject(int subjectID) {
+        
     }
 
 }
