@@ -94,31 +94,20 @@ public class StudentController {
     
             // To check if both email and password are the right format
             if (isValidEmail(email) && isValidPassword(password)) {
+                System.out.printf(YELLOW + "%-8semail and password formats acceptable" + RESET,"").println();
+                
                 // To check if the student with the email already exists
                 boolean exists = false;
                 for (Student student : students) {
                     if (student.getEmail().equals(email)) {
                         exists = true;
-                        System.out.printf(RED + "Student" + ((Student) students).getName() + "already exists" + RESET, "").println();
+                        System.out.printf(RED + "%-8sStudent " + student.getName() + " already exists" + RESET, "").println();
                         break;
                     }
                 }
 
-                // /* Check if the entered email already exists */
-                // boolean exists = Emailcontains(email);
-                // if (exists) {
-                //     Student[] students = database.readObjects();
-                //     /* If a duplicate student is found */
-                //     int index = getEmailIndex(email);
-                //     /* Create a container to store data of the duplicate student found */
-                //     Student stu2 = students[index];
-                //     System.out.println("Student " + stu2.getName() + " already exists");
-                //     continue;
-                // }
-
                 // If the students doesn't exist, create a new student to the database
                 if (!exists) {
-
                     // Input name from the registering students
                     System.out.printf("%-8sName: ", "");
                     String name = scanner.nextLine();
@@ -136,26 +125,6 @@ public class StudentController {
             }
         }
     }
-
-    // // Implement this method to find the index of the student with the given email.
-    // private int getEmailIndex(String email) {
-    //     return 0;
-    // }
-
-    // /* Check if this student exists based on the email */
-    // public static boolean Emailcontains(String inputEmail) {
-    //     /* Check if this student's email exists */
-    //     Database db = new Database();
-    //     Student[] students = db.readObjects();
-    //     for (Student s : students) {
-    //         String email = s.getEmail();
-    //         if (email.equals(inputEmail)) {
-    //             return true; // Found a duplicate email
-    //         }
-    //     }
-    //     return false; // Not found, return false
-    // }
-
 
     // Define email verification method
     // Email must have . before @ and must end with university.com

@@ -17,11 +17,11 @@ public class Student implements Serializable {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.students = students;
+        this.subjects = new ArrayList<>();
+        this.studentID = Integer.parseInt(studentID());
         this.aveMark = 0.0;
         this.aveGrade = null;
-        this.subjects = new ArrayList<>();
-        this.students = students;
-        this.studentID = Integer.parseInt(studentID());
     }
 
     // Generate random studentID, 1 <= studentID <= 999999, unique and formatted as 6-digits width.
@@ -37,7 +37,7 @@ public class Student implements Serializable {
 
     public boolean alreadyExists(int studentID) {
         for (Student student : students) {
-            if (student.alreadyExists(studentID))
+            if (student.studentID == studentID)
                 return true;
         }
         return false;
