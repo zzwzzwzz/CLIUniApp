@@ -196,7 +196,7 @@ public class SubjectController {
         return In.nextChar();
     }
 
-    private void menu() {
+    public void menu() {
         char c;
         while ((c = readMenu()) != 'x') {
             switch (c) {

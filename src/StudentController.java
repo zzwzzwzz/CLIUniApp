@@ -58,29 +58,26 @@ public class StudentController {
         System.out.printf("%-8sPassword: ","");
         String password = scanner.nextLine();
     
+        boolean loggedIn = false;
+
         if (isValidEmail(email) && isValidPassword(password)) {
             System.out.printf(YELLOW + "%-8semail and password formats acceptable" + RESET,"").println();
-        
+            List<Student> students = database.readStudents();
+            
+            for (Student student : students) {
+                if (student.getEmail().equals(email) && student.getPassword().equals(password)) {
+                    // Student is found and the provided email and password match
+                    loggedIn = true;
+                    new SubjectController().menu();
+                    break; // Successful login, exit the loop
+                }
+            }
+            if (!loggedIn) {
+                System.out.printf(RED + "%-8sStudent does not exist" + RESET,"").println();
+            }
         
         } else {
             System.out.printf(RED + "%-8sIncorrect email or password format" + RESET,"").println();
-        }
-
-        List<Student> students = database.readStudents();
-        boolean loggedIn = false;
-    
-        for (Student student : students) {
-            if (student.getEmail().equals(email) && student.getPassword().equals(password)) {
-                // Student is found and the provided email and password match
-                loggedIn = true;
-                System.out.printf(CYAN + "%-16sStudent Course Menu (c/e/r/s/x): " + RESET,"");
-                new SubjectController().menu();
-                break; // Successful login, exit the loop
-            }
-        }
-    
-        if (!loggedIn) {
-            System.out.printf(RED + "%-8sStudent does not exist" + RESET,"").println();
         }
         return loggedIn;
     }
