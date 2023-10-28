@@ -1,6 +1,88 @@
-import java.io.Serializable;
 import java.util.List;
+import java.util.Scanner;
+import java.io.Serializable;
 
 public class Admin implements Serializable {
-    // Constructors, getters, setters, and methods for user stories 701, 702, 703, 801, 802, 803, 901, 902, 903, 1001, 1002, and 1003
+    private Database database;
+    private Scanner scanner;
+    private List<Student> students;
+
+    // Text color
+    public static final String RESET = "\033[0m";      // RESET
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String CYAN = "\033[0;96m";    // CYAN
+
+
+    public Admin(Database database, Scanner scanner) {
+        this.database = database;
+        this.scanner = scanner;
+    }
+
+    // Clear all the students from database
+    private void clearAll() {
+        System.out.printf(YELLOW + "%-8sClearing students database" + RESET,"").println();
+        students.clear();
+    }
+
+    private void groupbyGrade() {
+        // Implement the logic to group students by grade and display the results
+        // You can retrieve the list of students from the database
+    }
+
+    private void partition() {
+        // Implement the logic to partition students into pass/fail categories and display the results
+        // You can retrieve the list of students from the database
+    }
+
+    private void removeStudent() {
+        System.out.print("Enter the student's ID to remove: ");
+        int studentID = Integer.parseInt(scanner.nextLine());
+        boolean removed = database.removeStudent(studentID);
+        if (removed) {
+            System.out.println("Student with ID " + studentID + " has been removed.");
+        } else {
+            System.out.println("Student with ID " + studentID + " not found.");
+        }
+    }
+
+    private void showStudents() {
+        List<Student> students = database.readStudents();
+        System.out.printf(YELLOW + "%-8sStudent List" + RESET,"").println();
+        if (students.isEmpty()) {
+            System.out.printf("%-8s< Nothing to Display >","").println();
+        } else {
+            students.forEach(student -> System.out.println(student.toString()));
+        }
+    }
+
+    public void adminMenu() {
+        char choice;
+        do {
+            System.out.printf(CYAN + "%-8sAdmin System (c/g/p/r/s/x): " + RESET,"");
+            choice = scanner.nextLine().charAt(0);
+            switch (choice) {
+                case 'c':
+                    clearAll();
+                    break;
+                case 'g':
+                    groupbyGrade();
+                    break;
+                case 'p':
+                    partition();
+                    break;
+                case 'r':
+                    removeStudent();
+                    break;
+                case 's':
+                    showStudents();
+                    break;
+                case 'x':
+                    break;
+            }
+        } while (choice != 'x');
+    }
+
+
 }

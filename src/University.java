@@ -2,30 +2,36 @@ import java.util.Scanner;
 import utils.*;
 
 public class University {
-    public static final String YELLOW = "\u001B[33m"; 
-    public static final String RESET = "\033[0m"; // Text Reset
+    // Text color
+    public static final String RESET = "\033[0m";      // RESET
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String CYAN = "\033[0;96m";    // CYAN
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StudentController studentController = new StudentController(scanner);
-        AdminController adminController = new AdminController(null, scanner);
+        Admin admin = new Admin(null, scanner);
 
         char choice;
         do {
-            System.out.print("University System: (A)dmin, (S)tudent, or X : ");
+            System.out.print(CYAN + "University System: (A)dmin, (S)tudent, or X : " + RESET);
             choice = In.nextChar();
 
             switch (choice) {
                 case 'A':
-                    adminController.runAdminMenu();
+                    admin.adminMenu();
                     break;
                 case 'S':
                     studentController.run();
                     break;
                 case 'X':
-                    System.out.println(YELLOW +"Thank You" + RESET);
+                    System.out.println(YELLOW + "Thank You");
+                    System.out.print(RESET); // Reset text color to default
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again with the correct uppercased letter.");
+                    System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 'X');
     }

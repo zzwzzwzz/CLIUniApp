@@ -42,9 +42,6 @@ public class Database {
     public boolean removeStudent(int studentID) {
         return false;
     }
-
-    public void clearAll() {
-    }
 }
 
 // import java.io.*;
