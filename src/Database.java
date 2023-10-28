@@ -29,10 +29,10 @@ public class Database {
         File file = new File(filename);
 
         if (file.exists() && file.length() > 0) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            try (ObjectInputStream objectIn = new ObjectInputStream(new FileInputStream(filename))) {
                 while (true) {
                     try {
-                        Student student = (Student) ois.readObject();
+                        Student student = (Student) objectIn.readObject();
                         students.add(student);
                     } catch (EOFException e) {
                         break;

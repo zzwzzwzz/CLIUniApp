@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Student implements Serializable {
+    // Use our own serialVersionUID instead of automated generated UID
+    private static final long serialVersionUID = -190677127981620175L;
+
     private int studentID;
     private String name;
     private String email;
@@ -47,25 +50,14 @@ public class Student implements Serializable {
         return this.studentID;
     }
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
         return this.email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return this.password;
@@ -79,6 +71,7 @@ public class Student implements Serializable {
         return this.subjects;
     }
 
+    // Do i need this?
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
@@ -91,18 +84,15 @@ public class Student implements Serializable {
         return aveMark;
     }
 
-    public void setAveMark(double aveMark) {
-        this.aveMark = aveMark;
-    }
-
     public String getAveGrade() {
         return aveGrade;
     }
 
-    public void setAveGrade(String aveGrade) {
-        this.aveGrade = aveGrade;
+    public void enrollSubject(Subject selectedSubject) {
     }
 
-    public void enrollSubject(Subject selectedSubject) {
+    @Override
+    public String toString() {
+        return String.format("%-8s%-10s :: %06d --> Email: %s ", "", name, studentID, email);
     }
 }
