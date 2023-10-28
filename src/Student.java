@@ -13,8 +13,7 @@ public class Student implements Serializable {
     private List<Subject> subjects;
     private List<Student> students;
 
-    public Student(int studentID, String name, String email, String password, List<Student> students) {
-        this.studentID = Integer.parseInt(studentID());
+    public Student(String name, String email, String password, List<Student> students) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -22,6 +21,7 @@ public class Student implements Serializable {
         this.aveGrade = null;
         this.subjects = new ArrayList<>();
         this.students = students;
+        this.studentID = Integer.parseInt(studentID());
     }
 
     // Generate random studentID, 1 <= studentID <= 999999, unique and formatted as 6-digits width.
@@ -30,14 +30,14 @@ public class Student implements Serializable {
         Random r = new Random();
         int studentID = r.nextInt(999999)+1;
 
-        while (match(studentID))
+        while (alreadyExists(studentID))
             studentID = r.nextInt(999999)+1;
             return String.format("%06d", studentID);
     }
 
-    public boolean match(int studentID) {
+    public boolean alreadyExists(int studentID) {
         for (Student student : students) {
-            if (student.match(studentID))
+            if (student.alreadyExists(studentID))
                 return true;
         }
         return false;
@@ -101,5 +101,8 @@ public class Student implements Serializable {
 
     public void setAveGrade(String aveGrade) {
         this.aveGrade = aveGrade;
+    }
+
+    public void enrollSubject(Subject selectedSubject) {
     }
 }

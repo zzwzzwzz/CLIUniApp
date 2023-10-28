@@ -26,26 +26,33 @@ public class Database {
 
     public List<Student> readStudents() {
         List<Student> students = new ArrayList<>();
-        try (ObjectInputStream objectIn = new ObjectInputStream(new FileInputStream(filename))) {
-            students = (List<Student>) objectIn.readObject();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, "File Not Found", ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, "Reading Error", ex);
+        File file = new File(filename);
+
+        if (file.exists() && file.length() > 0) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+                while (true) {
+                    try {
+                        Student student = (Student) ois.readObject();
+                        students.add(student);
+                    } catch (EOFException e) {
+                        break;
+                    }
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return students;
     }
 
-    public void writeStudents(List<Student> students) {
+    public static void writeStudents(List<Student> students) {
         try (ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(filename))) {
-            objectOut.writeObject(students);
-        } catch (IOException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, "Writing Error", ex);
+            for (Student student : students) {
+                objectOut.writeObject(student);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-
-    public boolean removeStudent(int studentID) {
-        return false;
     }
 
     public static void clearAll() {
@@ -55,4 +62,15 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    public boolean removeStudent(int studentID) {
+        return false;
+    }
+    public Student[] readObjects() {
+        return null;
+    }
+
+    public void writeObject(Student student) {
+    }
+
 }

@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class StudentController {
     private Database database;
     private List<Student> students;
+    private String name;
 
     // Text color
     public static final String RESET = "\033[0m";      // RESET
@@ -22,7 +23,7 @@ public class StudentController {
     public StudentController(Scanner scanner) {
         database = new Database();
         database.initialize();
-        students = new ArrayList<>();
+        students = database.readStudents();
     }
 
     public void menu() {
@@ -80,6 +81,7 @@ public class StudentController {
     }
 
     public void register(Scanner scanner) {
+
         System.out.printf(GREEN + "%-8sStudent Sign Up" + RESET,"").println();
 
         while (true) {
@@ -92,7 +94,6 @@ public class StudentController {
     
             // To check if both email and password are the right format
             if (isValidEmail(email) && isValidPassword(password)) {
-
                 // To check if the student with the email already exists
                 boolean exists = false;
                 for (Student student : students) {
@@ -103,51 +104,59 @@ public class StudentController {
                     }
                 }
 
+                // /* Check if the entered email already exists */
+                // boolean exists = Emailcontains(email);
+                // if (exists) {
+                //     Student[] students = database.readObjects();
+                //     /* If a duplicate student is found */
+                //     int index = getEmailIndex(email);
+                //     /* Create a container to store data of the duplicate student found */
+                //     Student stu2 = students[index];
+                //     System.out.println("Student " + stu2.getName() + " already exists");
+                //     continue;
+                // }
+
                 // If the students doesn't exist, create a new student to the database
                 if (!exists) {
-                    // Print a successfully registered message
-                    System.out.printf(YELLOW + "%-8semail and password formats acceptable" + RESET,"").println();
 
                     // Input name from the registering students
                     System.out.printf("%-8sName: ", "");
                     String name = scanner.nextLine();
                     System.out.printf(YELLOW + "%-8sEnrolling student %s" + RESET, "", name).println();
 
-                    // Generate a unique student ID
-                    int studentID = generateStudentID(students);
-
                     // Create the new student and add them to the database
-                    Student newStudent = new Student(studentID, name, email, password, students);
+                    Student newStudent = new Student(name, email, password, students);
                     students.add(newStudent);
-                    database.writeStudents(students);
+                    Database.writeStudents(students);
                 }
+                break;
+
             } else {
                 System.out.printf(RED + "%-8sIncorrect email or password format" + RESET,"").println();
             }
         }
     }
 
-    // Generate random studentID, 1 <= studentID <= 999999, unique and formatted as 6-digits width.
-    // IDs less than 6-digits width should be completed with zeroes from the left.
+    // // Implement this method to find the index of the student with the given email.
+    // private int getEmailIndex(String email) {
+    //     return 0;
+    // }
 
-    private int generateStudentID(List<Student> students) {
-        Random r = new Random();
-        int studentID = r.nextInt(999999)+1;
+    // /* Check if this student exists based on the email */
+    // public static boolean Emailcontains(String inputEmail) {
+    //     /* Check if this student's email exists */
+    //     Database db = new Database();
+    //     Student[] students = db.readObjects();
+    //     for (Student s : students) {
+    //         String email = s.getEmail();
+    //         if (email.equals(inputEmail)) {
+    //             return true; // Found a duplicate email
+    //         }
+    //     }
+    //     return false; // Not found, return false
+    // }
 
-        while (match(studentID))
-            studentID = r.nextInt(999999)+1;
-        return studentID;
-    }
 
-    public boolean match(int studentID) {
-        for (Student student : students) {
-            if (student.match(studentID))
-                return true;
-        }
-        return false;
-    }
-
-    
     // Define email verification method
     // Email must have . before @ and must end with university.com
     public static final String EMAIL_REGEX = "^[A-Za-z]+\\.[A-Za-z]+@university\\.com$"; 

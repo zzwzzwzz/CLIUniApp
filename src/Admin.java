@@ -1,5 +1,8 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.io.Serializable;
 
 public class Admin implements Serializable {
@@ -31,33 +34,40 @@ public class Admin implements Serializable {
         System.out.printf(YELLOW + "%-8sClearing students database" + RESET,"").println();
         System.out.printf(RED + "%-8sAre you sure you want to clear the database (Y)ES/(N)O: " + RESET,"");
         
-        String clearStudent = scanner.next().toUpperCase(); // Make sure the input is uppercase letter
+        String clearStudent = scanner.hasNext() ? scanner.next().toUpperCase() : "N"; // Make sure the input is uppercase letter
         // Clear all data if the input is Y
         if (clearStudent.equals("Y")){
-            Database.clearAll();
-            students.clear(); 
+            // Only clear the list if it's not null
+            if (students != null) {
+                students.clear(); 
+            }
+            Database.clearAll(); 
             System.out.printf(YELLOW + "%-8sStudents data cleared" + RESET,"").println();
         }
     }
 
     private void groupbyGrade() {
-        // Implement the logic to group students by grade and display the results
-        // You can retrieve the list of students from the database
+        Map<String, List<Student>> groups = new HashMap<>();
+        // This groupingBy function will organize based on the grade that the student in the list who has the grade
+        groups = students.stream().collect(Collectors.groupingBy(Student :: getAveGrade));
+        groups.forEach((k,v) -> System.out.printf("%4s --> %-12s %n", k, v));
     }
 
     private void partition() {
-        // Implement the logic to partition students into pass/fail categories and display the results
-        // You can retrieve the list of students from the database
+        Map<Boolean, List<Student>> partitioned = new HashMap<>();
+        partitioned = students.stream().collect(Collectors.partitioningBy(s -> s.getAveMark() >= 50));
+        // Print the map
+        partitioned.forEach((k,v) -> System.out.printf("%4s --> %-12s %n", k ? "PASS" : "FAIL", v));
     }
 
     private void removeStudent() {
-        System.out.print("Enter the student's ID to remove: ");
+        System.out.printf("%-8sRemove by ID: ","");
         int studentID = Integer.parseInt(scanner.nextLine());
         boolean removed = database.removeStudent(studentID);
         if (removed) {
-            System.out.println("Student with ID " + studentID + " has been removed.");
+            System.out.printf(YELLOW + "%-8sRemoving student " + studentID + " Account" + RESET,"").println();
         } else {
-            System.out.println("Student with ID " + studentID + " not found.");
+            System.out.printf(RED + "%-8sStudent " + studentID + " does not exist","").println();
         }
     }
 
@@ -68,9 +78,6 @@ public class Admin implements Serializable {
             System.out.printf("%-16s< Nothing to Display >","").println();
         } else {
             students.forEach(student -> System.out.println(student.toString()));
-            // for (int i = 0; i < students.size(); i++) {//遍历students数组,size()方法返回students数组的长度,i++每次循环加1
-            //     System.out.println(students.get(i).getName()+" :: "+students.get(i).getStudentID()+" --> Email: "+students.get(i).getEmail());
-            // }//打印出学生的名字/ID/email 通过get（）方法获取students数组里的元素
         }
     }
 
