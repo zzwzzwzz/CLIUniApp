@@ -11,10 +11,10 @@ public class Student implements Serializable {
     private String name;
     private String email;
     private String password;
+    private List<Student> students;
+    private List<Subject> subjects;
     private double aveMark;
     private String aveGrade;
-    private List<Subject> subjects;
-    private List<Student> students;
 
     public Student(String name, String email, String password, List<Student> students) {
         this.name = name;
@@ -23,8 +23,7 @@ public class Student implements Serializable {
         this.students = students;
         this.subjects = new ArrayList<>();
         this.studentID = Integer.parseInt(studentID());
-        this.aveMark = 0.0;
-        this.aveGrade = null;
+        this.aveMark = aveMark();
     }
 
     // Generate random studentID, 1 <= studentID <= 999999, unique and formatted as 6-digits width.
@@ -58,7 +57,6 @@ public class Student implements Serializable {
         return this.email;
     }
 
-
     public String getPassword() {
         return this.password;
     }
@@ -80,15 +78,24 @@ public class Student implements Serializable {
         subjects.remove(subject);
     }
 
+    public double aveMark() {
+        return aveMark;
+    }
+
     public double getAveMark() {
         return aveMark;
     }
 
+    // private String aveGrade(double aveMark) {
+    //     return aveMark >= 85 ? "HD" : 
+    //            aveMark >= 75 ? "D" : 
+    //            aveMark >= 65 ? "C" : 
+    //            aveMark >= 50 ? "P" :
+    //            "Z";
+    // }
+
     public String getAveGrade() {
         return aveGrade;
-    }
-
-    public void enrollSubject(Subject selectedSubject) {
     }
 
     @Override

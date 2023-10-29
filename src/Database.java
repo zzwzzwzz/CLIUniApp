@@ -55,14 +55,6 @@ public class Database {
         }
     }
 
-    public static void clearAll() {
-        try (PrintWriter writer = new PrintWriter(filename)) {
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     // Return true if a student was removed
     public boolean removeStudent(int studentID) {
         List<Student> students = readStudents();
@@ -71,18 +63,55 @@ public class Database {
         return removed;
     }
 
-    // Unfinished
-    public Student[] readSubjects() {
-        return null;
+    // Replace just this student in the database
+    public void replaceStudent(Student student) {
+        List<Student> students = readStudents();
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getStudentID() == student.getStudentID()) {
+                // Replace the student with updated information
+                students.set(i, student);
+                System.out.println("replacing student");
+            }
+        }
+        writeStudents(students);
     }
 
-    // Unifinished
-    public void writeSubjects(Subject subject) {
+    public List<Subject> readSubjects() {
+        List<Subject> subjects = new ArrayList<>();
+        File file = new File(filename);
 
+        if (file.exists() && file.length() > 0) {
+            try (ObjectInputStream objectIn = new ObjectInputStream(new FileInputStream(filename))) {
+                while (true) {
+                    try {
+                        Subject subject = (Subject) objectIn.readObject();
+                        subjects.add(subject);
+                    } catch (EOFException e) {
+                        break;
+                    }
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return subjects;
     }
 
-    public boolean removeSubject(int subjectID) {
-        
+    public static void writeSubjects(List<Subject> subjects) {
+        try (ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(filename))) {
+            for (Subject subject : subjects) {
+                objectOut.writeObject(subject);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public static void clearAll() {
+        try (PrintWriter writer = new PrintWriter(filename)) {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

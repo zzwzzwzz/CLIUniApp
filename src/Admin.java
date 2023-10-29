@@ -27,7 +27,7 @@ public class Admin implements Serializable {
         System.out.printf(YELLOW + "%-8sClearing students database" + RESET,"").println();
         System.out.printf(RED + "%-8sAre you sure you want to clear the database (Y)ES/(N)O: " + RESET,"");
         
-        // Make sure the input is uppercase letter
+        // Make sure the input is uppercase letter, to read a single character
         String clearStudent = scanner.hasNext() ? 
             scanner.nextLine().substring(0,1).toUpperCase() : 
             "N"; 
