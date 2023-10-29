@@ -58,49 +58,10 @@ public class SubjectController {
         database.replaceStudent(loggedInStudent);
     }
 
-    // // Access the logged-in student's information and enrolled subjects
-    // public Student getLoggedInStudent() {
-    //     return loggedInStudent;
-    // }
-
-    // public Student loggedInStudent(String email, String password) {
-    //     // Retrieve a list of students from the database
-    //     List<Student> students = database.readStudents();
-    
-    //     // Find the matching student through the list
-    //     for (Student student : students) {
-    //         if (student.getEmail().equals(email) && student.getPassword().equals(password)) {
-    //             // Matching student found, return it
-    //             return student;
-    //         }
-    //     }
-
-    //     // No matching student found
-    //     return null;
-    // }
-
     private void show() {
-        // Obtain the currently logged-in student
+        System.out.printf(YELLOW + "%-16sShowing %d subjects" + RESET, "", subjects.size()).println();
         
-        
-        // // Check if a student is logged in
-        // if (loggedInStudent == null) {
-        //     System.out.println("No student is logged in.");
-        //     return;
-        // }
-    
-        List<Subject> studentSubjects = new ArrayList<>();
-    
-        // Filter those enrolled subjects by the logged-in student
         for (Subject subject : subjects) {
-            if (loggedInStudent.getSubjects().contains(subject.getSubjectID())) {
-                studentSubjects.add(subject);
-            }
-        }
-    
-        System.out.printf(YELLOW + "%-16sShowing %d subjects" + RESET, "", studentSubjects.size()).println();
-        
-        for (Subject subject : studentSubjects) {
             System.out.println(subject.toString());
         }
     }

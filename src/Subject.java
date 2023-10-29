@@ -61,6 +61,6 @@ public class Subject implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("[ Subject::%03d -- mark = %3d-- grade = *-4s]", subjectID, mark, grade);
+        return String.format("%-16s[ Subject::%03d -- mark =%3d -- grade =  %2s ]", "", subjectID, mark, grade);
     }
 }

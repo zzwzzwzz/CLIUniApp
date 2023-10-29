@@ -63,14 +63,13 @@ public class Database {
         return removed;
     }
 
-    // Replace just this student in the database
+    // Replace student in the database after enrollment
     public void replaceStudent(Student student) {
         List<Student> students = readStudents();
         for (int i = 0; i < students.size(); i++) {
             if (students.get(i).getStudentID() == student.getStudentID()) {
-                // Replace the student with updated information
+                // Replacing the student with updated information
                 students.set(i, student);
-                System.out.println("replacing student");
             }
         }
         writeStudents(students);
