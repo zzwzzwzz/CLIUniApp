@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,8 +7,7 @@ public class SubjectController {
     private Database database;
     private Scanner scanner;
     private List<Subject> subjects;
-    private String email;
-    private String password;
+
     private Student loggedInStudent; // This variable is to keep track of the logged-in student
     
     // Text color
@@ -132,5 +130,4 @@ public class SubjectController {
             }
         }
     }
-
 }

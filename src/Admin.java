@@ -1,8 +1,5 @@
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 import java.io.Serializable;
 
 public class Admin implements Serializable {
@@ -42,18 +39,365 @@ public class Admin implements Serializable {
         }
     }
 
-    private void groupbyGrade() {
-        Map<String, List<Student>> groups = new HashMap<>();
-        // This groupingBy function will organize based on the grade that the student in the list who has the grade
-        groups = students.stream().collect(Collectors.groupingBy(Student :: getAveGrade));
-        groups.forEach((k,v) -> System.out.printf("%4s --> %-12s %n", k, v));
+    private static void groupbyGrade( ) {
+        Database db = new Database();
+        List<Student> students=db.readStudents();
+        System.out.printf(YELLOW + "%-8sGrade Grouping" + RESET,"").println();;
+        if (students.size()<=0)
+        {
+            System.out.printf("%-16s< Nothing to display >","").println();;
+            return;
+        }
+        int x,y,z,k,h;
+        x=0;
+        y=0;
+        z=0;
+        k=0;
+        h=0;
+        for (Student student:students)
+        {
+            if(student.getSubjects()==null)
+            {
+                x++;
+            }
+            else
+            {
+                double t=0;
+                for (Subject subject:student.getSubjects()) {
+                        t+=subject.getMark();
+                }
+                if(t/student.getSubjects().size()>=85)
+                {
+                    y++;
+                }
+                else if(t/student.getSubjects().size()>=75)
+                {
+                    z++;
+                }
+                else if(t/student.getSubjects().size()>65)
+                {
+                    k++;
+                }
+                else if(t/student.getSubjects().size()>50)
+                {
+                    h++;
+                }
+            }
+        }
+        if(x>0)
+        {
+            System.out.printf("%-8sZ  --> [","");
+            boolean flag=true;
+            for (Student student:students)
+            {
+                    double t=0;
+
+                if(student.getSubjects()==null)
+                {
+                    if(flag)
+                    {
+                        System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + "0.00");
+                        flag=false;
+
+
+                    }
+                    else
+                    {
+                        System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + "0.00");
+
+                    }
+
+                }
+                else {
+
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if (t / student.getSubjects().size() < 50) {
+                        if(flag)
+                        {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                            flag=false;
+
+
+                        }
+                        else
+                        {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+
+                        }
+                     }
+                }
+            }
+            System.out.println("]");
+        }
+        if(y>0)
+        {
+            boolean flag=true;
+            System.out.printf("%-8sHD  --> [","");
+            for (Student student:students)
+            {
+                double t=0;
+
+                if(student.getSubjects()==null)
+                {
+
+
+                }
+                else {
+
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if (t / student.getSubjects().size() >=85) {
+                        if(flag)
+                        {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  HD - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                            flag=false;
+
+
+                        }
+                        else
+                        {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  HD - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+
+                        }                    
+                    }
+                }
+            }
+            System.out.println("]");
+
+        }
+        if(z>0)
+        {
+            boolean flag=true;
+            System.out.printf("%-8sD  --> [","");
+            for (Student student:students)
+            {
+                double t=0;
+                if(student.getSubjects()==null)
+                {
+
+
+                }
+                else {
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if (t / student.getSubjects().size() >=75) {
+                        if(flag)
+                        {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  D - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                            flag=false;
+
+
+                        }
+                        else
+                        {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f",t / student.getSubjects().size()) );
+
+                        }
+                    }
+                }
+            }
+            System.out.println("]");
+
+        }
+        if(k>0)
+        {
+            boolean flag=true;
+            System.out.printf("%-8sC  --> [","");
+            for (Student student:students)
+            {
+                double t=0;
+                if(student.getSubjects()==null)
+                {
+                }
+                else {
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if (t / student.getSubjects().size() >=65) {
+                        if(flag)
+                        {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  C - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                            flag=false;
+
+
+                        }
+                        else
+                        {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  C - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+
+                        }
+                    }
+                }
+
+            }
+            System.out.println("]");
+
+        }
+
+
+        if(h>0)
+        {
+            boolean flag=true;
+            System.out.printf("%-8sP  --> [","");
+            for (Student student:students)
+            {
+                double t=0;
+                if(student.getSubjects()==null)
+                {
+
+
+                }
+                else {
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if (t / student.getSubjects().size() >=50) {
+                        if(flag)
+                        {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  P - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                            flag=false;
+
+
+                        }
+                        else
+                        {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  P - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+
+                        }                    }
+                }
+            }
+            System.out.println("]");
+        }
     }
 
-    private void partition() {
-        Map<Boolean, List<Student>> partitioned = new HashMap<>();
-        partitioned = students.stream().collect(Collectors.partitioningBy(s -> s.getAveMark() >= 50));
-        // Print the map
-        partitioned.forEach((k,v) -> System.out.printf("%4s --> %-12s %n", k ? "PASS" : "FAIL", v));
+    private static void partition() {
+        Database db = new Database();
+        List<Student> students=db.readStudents();
+        System.out.printf(YELLOW + "%-8sPASS/FALL Partition" + RESET,"").println();
+        if (students.size()<=0)
+        {
+            System.out.printf("%-16s< Nothing to display >","").println();
+            return;
+        }
+        int x,y;
+        x=0;
+        y=0;
+        for (Student student:students)
+        {
+            if(student.getSubjects()==null)
+            {
+                x++;
+            }
+            else
+            {
+                double t=0;
+                for (Subject subject:student.getSubjects()) {
+                    t+=subject.getMark();
+                }
+                if(t/student.getSubjects().size()>=50)
+                {
+                    y++;
+                }
+                else
+                {
+                    x++;
+                }
+
+            }
+        }
+        if(x>0)
+        {
+            boolean flag=true;
+            System.out.printf("%-8sFALL  --> [","");
+            for (Student student:students)
+            {
+                double t = 0;
+
+                if(student.getSubjects()==null)
+                {
+                    if(flag)
+                    {
+                        System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + "0.00");
+                        flag=false;
+
+
+                    }
+                    else
+                    {
+                        System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + "0.00");
+
+                    }
+
+                }
+                else {
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if (t / student.getSubjects().size() < 50)
+                    {
+                        if(flag)
+                        {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );                            flag=false;
+
+                        }
+                        else
+                        {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + String.format("%.2f", t / student.getSubjects().size())) ;
+
+                        }
+                    }
+                }
+            }
+            System.out.println("]");
+        }
+        if(y>0)
+        {
+            boolean flag=true;
+            System.out.printf("%-8sPASS  --> [","");
+            for (Student student:students)
+            {
+                double t=0;
+                if(student.getSubjects()==null)
+                {
+                }
+                else
+                {
+                    for (Subject subject : student.getSubjects()) {
+                        t += subject.getMark();
+                    }
+                    if(flag)
+                    {
+                        if (t / student.getSubjects().size() >= 85) {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  HD - MARK: " + String.format("%.2f", t / student.getSubjects().size()));
+                        } else if (t / student.getSubjects().size() >= 75) {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  D - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                        } else if (t / student.getSubjects().size() >= 65) {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  C - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                        } else if (t / student.getSubjects().size() >= 50) {
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  P - MARK: " + String.format("%.2f", t / student.getSubjects().size()));
+                        }
+                        flag=false;
+                    }
+                    else
+                    {
+                        if (t / student.getSubjects().size() >= 85) {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  HD - MARK: " + String.format("%.2f", t / student.getSubjects().size()));
+                        } else if (t / student.getSubjects().size() >= 75) {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  D - MARK: " + String.format("%.2f", t / student.getSubjects().size()));
+                        } else if (t / student.getSubjects().size() >= 65) {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  C - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
+                        } else if (t / student.getSubjects().size() >= 50) {
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  P - MARK: " + String.format("%.2f", t / student.getSubjects().size()));
+                        }
+                    }
+                }
+            }
+            System.out.println("]");
+        }
     }
 
     private void removeStudent() {
@@ -106,5 +450,4 @@ public class Admin implements Serializable {
             }
         } while (choice != 'x');
     }
-
 }

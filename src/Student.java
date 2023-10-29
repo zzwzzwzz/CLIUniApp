@@ -86,14 +86,6 @@ public class Student implements Serializable {
         return aveMark;
     }
 
-    private String aveGrade(double aveMark) {
-        return aveMark >= 85 ? "HD" : 
-               aveMark >= 75 ? "D" : 
-               aveMark >= 65 ? "C" : 
-               aveMark >= 50 ? "P" :
-               "Z";
-    }
-
     public String getAveGrade() {
         return aveGrade;
     }
