@@ -16,6 +16,7 @@ public class Subject implements Serializable {
         this.grade = grade(mark);
     }
 
+    // ID randomly generated 1 <= ID <= 999
     private int subjectID() {
         Random r = new Random();
         int subjectID = r.nextInt(999)+1;
@@ -25,6 +26,7 @@ public class Subject implements Serializable {
         return subjectID;
     }
     
+    // To make sure the subjectID is unique
     public boolean alreadyExists(int subjectID) {
         for (Subject subject : subjects) {
             if (subject.subjectID == subjectID)
@@ -59,6 +61,9 @@ public class Subject implements Serializable {
         return this.grade;
     }
 
+    // %-16s means 16 spaces
+    // %03d subjectIDs are formatted as 3-digits width, less than 3-digits staring with zeroes from the left
+    // %3d formating mark as 3 digit integer, %2s formating grade as 2 digit string
     @Override
     public String toString() {
         return String.format("%-16s[ Subject::%03d -- mark =%3d -- grade =  %2s ]", "", subjectID, mark, grade);

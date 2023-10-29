@@ -75,37 +75,6 @@ public class Database {
         writeStudents(students);
     }
 
-    public List<Subject> readSubjects() {
-        List<Subject> subjects = new ArrayList<>();
-        File file = new File(filename);
-
-        if (file.exists() && file.length() > 0) {
-            try (ObjectInputStream objectIn = new ObjectInputStream(new FileInputStream(filename))) {
-                while (true) {
-                    try {
-                        Subject subject = (Subject) objectIn.readObject();
-                        subjects.add(subject);
-                    } catch (EOFException e) {
-                        break;
-                    }
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return subjects;
-    }
-
-    public static void writeSubjects(List<Subject> subjects) {
-        try (ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(filename))) {
-            for (Subject subject : subjects) {
-                objectOut.writeObject(subject);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void clearAll() {
         try (PrintWriter writer = new PrintWriter(filename)) {
             writer.close();

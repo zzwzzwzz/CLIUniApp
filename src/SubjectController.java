@@ -17,6 +17,7 @@ public class SubjectController {
     public static final String YELLOW = "\033[0;33m";  // YELLOW
     public static final String CYAN = "\033[0;96m";    // CYAN
 
+    // Constructor
     public SubjectController(Database database, Scanner scanner, Student student) {
         this.database = database;
         this.scanner = scanner;

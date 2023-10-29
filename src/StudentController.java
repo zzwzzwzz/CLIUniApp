@@ -59,7 +59,6 @@ public class StudentController {
                 for (Student student : students) {
                     if (student.getEmail().equals(email)) {
                         exists = true;
-                        System.out.println();
                         System.out.printf(RED + "%-8sStudent " + student.getName() + " already exists" + RESET, "").println();
                         break;
                     }
@@ -114,6 +113,7 @@ public class StudentController {
                     break; // Successful login, exit the loop
                 }
             }
+
             // No matching student is found
             if (!loggedIn) {
                 System.out.printf(RED + "%-8sStudent does not exist" + RESET,"").println();
@@ -122,6 +122,8 @@ public class StudentController {
         } else {
             System.out.printf(RED + "%-8sIncorrect email or password format" + RESET,"").println();
         }
+
+        // Boolean needs to have a return value, true or false
         return loggedIn;
     }
 

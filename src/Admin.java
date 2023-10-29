@@ -90,7 +90,7 @@ public class Admin implements Serializable {
             boolean flag=true;
             for (Student student:students)
             {
-                    double t=0;
+                double t=0;
 
                 if(student.getSubjects()==null)
                 {
@@ -98,15 +98,11 @@ public class Admin implements Serializable {
                     {
                         System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + "0.00");
                         flag=false;
-
-
                     }
                     else
                     {
                         System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + "0.00");
-
                     }
-
                 }
                 else {
 
@@ -118,13 +114,10 @@ public class Admin implements Serializable {
                         {
                             System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
                             flag=false;
-
-
                         }
                         else
                         {
                             System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
-
                         }
                      }
                 }
@@ -142,7 +135,6 @@ public class Admin implements Serializable {
                 if(student.getSubjects()==null)
                 {
 
-
                 }
                 else {
 
@@ -154,19 +146,15 @@ public class Admin implements Serializable {
                         {
                             System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  HD - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
                             flag=false;
-
-
                         }
                         else
                         {
                             System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  HD - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
-
-                        }                    
+                        }  
                     }
                 }
             }
             System.out.println("]");
-
         }
         if(z>0)
         {
@@ -177,8 +165,6 @@ public class Admin implements Serializable {
                 double t=0;
                 if(student.getSubjects()==null)
                 {
-
-
                 }
                 else {
                     for (Subject subject : student.getSubjects()) {
@@ -189,19 +175,15 @@ public class Admin implements Serializable {
                         {
                             System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  D - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
                             flag=false;
-
-
                         }
                         else
                         {
                             System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f",t / student.getSubjects().size()) );
-
                         }
                     }
                 }
             }
             System.out.println("]");
-
         }
         if(k>0)
         {
@@ -222,22 +204,16 @@ public class Admin implements Serializable {
                         {
                             System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  C - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
                             flag=false;
-
-
                         }
                         else
                         {
                             System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  C - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
-
                         }
                     }
                 }
-
             }
             System.out.println("]");
-
         }
-
 
         if(h>0)
         {
@@ -248,8 +224,6 @@ public class Admin implements Serializable {
                 double t=0;
                 if(student.getSubjects()==null)
                 {
-
-
                 }
                 else {
                     for (Subject subject : student.getSubjects()) {
@@ -260,14 +234,12 @@ public class Admin implements Serializable {
                         {
                             System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  P - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
                             flag=false;
-
-
                         }
                         else
                         {
                             System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  P - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );
-
-                        }                    }
+                        } 
+                    }
                 }
             }
             System.out.println("]");
@@ -280,7 +252,8 @@ public class Admin implements Serializable {
         System.out.printf(YELLOW + "%-8sPASS/FALL Partition" + RESET,"").println();
         if (students.size()<=0)
         {
-            System.out.printf("%-16s< Nothing to display >","").println();
+            System.out.printf("%-8sFAIL --> []","").println();
+            System.out.printf("%-8sPASS --> []","").println();
             return;
         }
         int x,y;
@@ -306,7 +279,6 @@ public class Admin implements Serializable {
                 {
                     x++;
                 }
-
             }
         }
         if(x>0)
@@ -321,17 +293,13 @@ public class Admin implements Serializable {
                 {
                     if(flag)
                     {
-                        System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + "0.00");
+                        System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + "0.00");
                         flag=false;
-
-
                     }
                     else
                     {
-                        System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + "0.00");
-
+                        System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + "0.00");
                     }
-
                 }
                 else {
                     for (Subject subject : student.getSubjects()) {
@@ -341,13 +309,12 @@ public class Admin implements Serializable {
                     {
                         if(flag)
                         {
-                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );                            flag=false;
-
+                            System.out.print(student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f", t / student.getSubjects().size()) );                            
+                            flag=false;
                         }
                         else
                         {
-                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  F - MARK: " + String.format("%.2f", t / student.getSubjects().size())) ;
-
+                            System.out.print(", "+student.getName() + " :: " + student.getStudentID() + " --> GRADE:  Z - MARK: " + String.format("%.2f", t / student.getSubjects().size())) ;
                         }
                     }
                 }
@@ -402,7 +369,6 @@ public class Admin implements Serializable {
 
     private void removeStudent() {
         System.out.printf("%-8sRemove by ID: ","");
-
         int studentID = Integer.parseInt(scanner.nextLine());
         boolean removed = database.removeStudent(studentID);
         if (removed) {
@@ -418,6 +384,8 @@ public class Admin implements Serializable {
         if (students.isEmpty()) {
             System.out.printf("%-16s< Nothing to Display >","").println();
         } else {
+            // forEach iterates through each student in the students collection
+            // For each student, it calls the toString method to print a string of the student to the console
             students.forEach(student -> System.out.println(student.toString()));
         }
     }

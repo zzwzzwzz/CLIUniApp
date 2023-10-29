@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Student implements Serializable {
     // Use our own serialVersionUID instead of automated generated UID
+    // This one is actually a bug solution
     private static final long serialVersionUID = -190677127981620175L;
 
     private int studentID;
@@ -13,8 +14,6 @@ public class Student implements Serializable {
     private String password;
     private List<Student> students;
     private List<Subject> subjects;
-    private double aveMark;
-    private String aveGrade;
 
     public Student(String name, String email, String password, List<Student> students) {
         this.name = name;
@@ -22,19 +21,18 @@ public class Student implements Serializable {
         this.password = password;
         this.students = students;
         this.subjects = new ArrayList<>();
-        this.studentID = Integer.parseInt(studentID());
-        this.aveMark = aveMark();
+        this.studentID = studentID();
     }
 
     // Generate random studentID, 1 <= studentID <= 999999, unique and formatted as 6-digits width.
     // IDs less than 6-digits width should be completed with zeroes from the left.
-    private String studentID() {
+    private int studentID() {
         Random r = new Random();
         int studentID = r.nextInt(999999)+1;
 
         while (alreadyExists(studentID))
             studentID = r.nextInt(999999)+1;
-        return String.format("%06d", studentID);
+        return studentID;
     }
 
     public boolean alreadyExists(int studentID) {
@@ -69,25 +67,8 @@ public class Student implements Serializable {
         return this.subjects;
     }
 
-    // Do i need this?
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
     public void removeSubject(Subject subject) {
         subjects.remove(subject);
-    }
-
-    public double aveMark() {
-        return aveMark;
-    }
-
-    public double getAveMark() {
-        return aveMark;
-    }
-
-    public String getAveGrade() {
-        return aveGrade;
     }
 
     @Override
